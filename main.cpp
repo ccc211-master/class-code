@@ -11,28 +11,14 @@ using std::ifstream;
 using std::getline;
 
 int main(int argc, char* argv[]){
-    ifstream file;
-
-    file.open((argv[1]));
-    if (file.fail()){
-        cerr << "No pude abrir ese archivo" << endl;
-        return 1;
-    }
-    string word1, word2;
-    file >> word1;
-    getline(file, word2);
-    cout << word1 << endl << word2 << endl;
+    ofstream file("data.bin", std::ofstream::out | std::ofstream::binary);
+    // Cuando se usa este operador SIEMPRE se va como una cadena :(
+    // file << 65535 << endl;
+    // Para mandar datos binarios es necesario usar el metodo write.
+    int value = 65535;
+    file.write((char*)(&value), sizeof(int));
     file.close();
 
-    file.open((argv[1]));
-    if (file.fail()){
-        cerr << "No pude abrir ese archivo" << endl;
-        return 1;
-    }
-    getline(file, word1);
-    file >> word2;
-    cout << word1 << endl << word2 << endl;
-    file.close();
-
+    
     return 0;
 }
